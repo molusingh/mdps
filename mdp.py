@@ -12,7 +12,7 @@ import gym
 RANDOM_SEED = 1994540101
 np.random.seed(RANDOM_SEED) # keep results consistent
 
-lake = OpenAI_MDPToolbox('FrozenLake-v0')
+lake = OpenAI_MDPToolbox('FrozenLake-v0', is_slippery=True) # stochastic 4x4
 
 def convert_action(a):
     if a == 0:
