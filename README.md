@@ -20,9 +20,12 @@ conda env update --file environment.yml --prune
 jupyter lab
 
 # generate final results
-python main.py 
+python main.py # forest
+python main.py --lake
 
 References:
 MDP Toolbox library 
 https://github.com/hiive/hiivemdptoolbox
 Piazza
+
+# copied since not available yet https://github.com/hiive/hiivemdptoolbox/blob/master/hiive/mdptoolbox/openai.py

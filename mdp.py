@@ -6,6 +6,7 @@ import json
 import time
 
 from hiive.mdptoolbox import mdp, example
+import gym
 
 RANDOM_SEED = 1994540101
 np.random.seed(RANDOM_SEED) # keep results consistent
@@ -20,6 +21,8 @@ def illustrate_policy(policy, problem_name="Forest"):
             else:
                 waits += 1
         return f'Number of states: {len(policy)}, Number of cuts: {cuts}, Number of waits: {waits}'
+    else:
+        return policy
 
 def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", value_iter=True, output="output", show=False):
     policies = {}

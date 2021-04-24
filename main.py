@@ -6,30 +6,40 @@ import argparse
 import pandas as pd
 
 from mdp import *
+from openai import OpenAI_MDPToolbox
 
 def main(args):
     print(f'\nBeginning experiments, provided arguments: {args}\n')
-    problem_name = "Forest" if not args.lake else "Frozen_Lake"
+
+    problem_name = "Forest" 
     P, R = example.forest(S=500, r1=4, r2=2, p=0.25, is_sparse=False) # Forest 
     alphas = [0.1, 0.01, 0.001]
-    epsilons = [0.9, 0.75, 0.5, 0.25]
-
+    epsilons = [0.95, 0.5, 0.25]
     gammas = [0.5, 0.8, 0.9, 0.95, 0.99]
+    n_iter = 1000000
+
+    if args.lake:
+        lake = OpenAI_MDPToolbox('FrozenLake-v0')
+        P = lake.P 
+        R = lake.R
+        problem_name = "FrozenLake"
+
     kargs = {
         "P": P, 
         "R": R,
         "problem_name": problem_name,
         "output": args.output
     }
+
     run_iterations(gammas=gammas, value_iter=True, **kargs) # value iteration
     print()
     run_iterations(gammas=gammas, value_iter=False, **kargs) # policy iteration
     print()
-    run_qlearnings(params=alphas, n_iter=10000, param_alpha=True, **kargs) # qlearning alphas
+    run_qlearnings(params=alphas, n_iter=n_iter, param_alpha=True, **kargs) # qlearning alphas
     print()
-    run_qlearnings(params=epsilons, n_iter=10000, param_alpha=False, **kargs) # qlearnings 
+    run_qlearnings(params=epsilons, n_iter=n_iter, param_alpha=False, **kargs) # qlearnings 
     print()
-    q_learning(plot=True, **kargs)
+    q_learning(plot=True, **kargs, n_iter=n_iter)
 
     print(f'\nCompleted!\narguments: {args}\n')
     
