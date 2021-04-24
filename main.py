@@ -23,6 +23,10 @@ def main(args):
         P = lake.P 
         R = lake.R
         problem_name = "FrozenLake"
+        n_iter = 1000000
+        gammas = [0.5, 0.8, 0.9, 0.95, 0.99]
+        alphas = [0.1, 0.05, 0.01, 0.005]
+        epsilons = [0.95, 0.8, 0.25]
 
     kargs = {
         "P": P, 
@@ -46,7 +50,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Execute Markov Decision Processes experiments')
-    parser.add_argument('--lake', dest='lake', action='store_false', help="run on frozen lake problem, else forest")
+    parser.add_argument('--lake', dest='lake', action='store_true', help="run on frozen lake problem, else forest")
     parser.add_argument('--output',type=str,help='output directory, default value is "output"')
     parser.set_defaults(output='output', lake=False)
     args = parser.parse_args()
