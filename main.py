@@ -22,9 +22,13 @@ def main(args):
         "output": args.output
     }
     run_iterations(gammas=gammas, value_iter=True, **kargs) # value iteration
+    print()
     run_iterations(gammas=gammas, value_iter=False, **kargs) # policy iteration
-    run_qlearnings(params=alphas, n_iter=1000000, param_alpha=True, **kargs) # qlearning alphas
-    run_qlearnings(params=epsilons, n_iter=1000000, param_alpha=False, **kargs) # qlearnings 
+    print()
+    run_qlearnings(params=alphas, n_iter=10000, param_alpha=True, **kargs) # qlearning alphas
+    print()
+    run_qlearnings(params=epsilons, n_iter=10000, param_alpha=False, **kargs) # qlearnings 
+    print()
     q_learning(plot=True, **kargs)
 
     print(f'\nCompleted!\narguments: {args}\n')

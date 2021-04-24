@@ -10,6 +10,17 @@ from hiive.mdptoolbox import mdp, example
 RANDOM_SEED = 1994540101
 np.random.seed(RANDOM_SEED) # keep results consistent
 
+def illustrate_policy(policy, problem_name="Forest"):
+    if problem_name == "Forest":
+        cuts = 0
+        waits = 0
+        for i in policy:
+            if i == 1:
+                cuts += 1
+            else:
+                waits += 1
+        return f'Number of states: {len(policy)}, Number of cuts: {cuts}, Number of waits: {waits}'
+
 def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", value_iter=True, output="output", show=False):
     policies = {}
     rewards = {}
@@ -49,7 +60,8 @@ def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", v
     else:
         plt.close()
     
-    print(f"Problem: {problem_name}\nFunction: {desc}\nPolicies for different gamma values:\n{policies}")
+    policy_desc = {key: illustrate_policy(policies[key], problem_name) for key in policies}
+    print(f"Problem: {problem_name}\nFunction: {desc}\nPolicies for different gamma values:\n{policy_desc}")
     return rewards, time, policies
 
 
@@ -83,6 +95,7 @@ def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.001, e
             plt.plot()
         else:
             plt.close()
+        print(f'Q Learning time: {ql.time}\npolicy: {illustrate_policy(ql.policy, problem_name)}')
     return ql, ql_results
 
 def run_qlearnings(P, R, params=[0.1, 0.25], problem_name="Forest", value_iter=True, output="output", param_alpha=True, show=False, n_iter=10000):
@@ -126,5 +139,6 @@ def run_qlearnings(P, R, params=[0.1, 0.25], problem_name="Forest", value_iter=T
     else:
         plt.close()
         
-    print(f"Problem: {problem_name}\nFunction: {desc}\nPolicies for different {param_name} values:\n{policies}")
+    policy_desc = {key: illustrate_policy(policies[key], problem_name) for key in policies}
+    print(f"Problem: {problem_name}\nFunction: {desc}\nPolicies for different {param_name} values:\n{policy_desc}")
     return rewards, time, policies
