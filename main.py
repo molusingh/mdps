@@ -21,10 +21,10 @@ def main(args):
         P = lake.P 
         R = lake.R
         problem_name = "FrozenLake"
-        n_iter = 10000
-        gammas = [0.99]
-        alphas = [0.1]
-        epsilons = [0.95, 0.25]
+        n_iter = 200000
+        gammas = [0.99, 0.8]
+        alphas = [0.1, 0.01, 0.2]
+        epsilons = [0.95, 0.25, 0.5]
 
     kargs = {
         "P": P, 

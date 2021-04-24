@@ -88,7 +88,7 @@ def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", v
     return rewards, time, policies
 
 
-def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.001, epsilon=1.0, e_min=0.1, e_decay=0.999, n_iter=10000, plot=False, show=False, output="output", problem_name="Forest", callback=None):
+def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.0001, epsilon=1.0, e_min=0.0001, e_decay=0.999, n_iter=10000, plot=False, show=False, output="output", problem_name="Forest", callback=None):
     args = {
         "alpha": alpha,
         "alpha_decay": alpha_decay,
