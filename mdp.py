@@ -42,7 +42,6 @@ def illustrate_policy(policy, problem_name="Forest"):
                 s = lake.env.desc[i][j].decode('UTF-8')
                 if s == 'H' or s == 'G':
                     policy_grid[i][j] = s
-        print(policy)
         return policy_grid
 
 def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", value_iter=True, output="output", show=False):
