@@ -9,9 +9,15 @@ from mdp import *
 
 def main(args):
     print(f'\nBeginning experiments, provided arguments: {args}\n')
+    problem_name = "Forest" if not args.lake else "Frozen_Lake"
+    P, R = example.forest(S=10, r1=4, r2=2, p=0.25, is_sparse=False) # Forest 
+
+    gammas = [0.8, 0.9, 0.95, 0.99]
+    run_iterations(P, R, gammas=gammas, problem_name=problem_name, value_iter=True) # value iteration
+    run_iterations(P, R, gammas=gammas, problem_name=problem_name, value_iter=False) # policy iteration
+
     print(f'\nCompleted!\narguments: {args}\n')
-    P, R = example.forest(S=10, r1=40, r2=20, p=0.25, is_sparse=False)
-    run_iterations(P, R, problem_name="Forest")
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Execute Markov Decision Processes experiments')
