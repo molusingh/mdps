@@ -6,7 +6,6 @@ import argparse
 import pandas as pd
 
 from mdp import *
-from openai import OpenAI_MDPToolbox
 
 def main(args):
     print(f'\nBeginning experiments, provided arguments: {args}\n')
@@ -19,14 +18,13 @@ def main(args):
     n_iter = 1000000
 
     if args.lake:
-        lake = OpenAI_MDPToolbox('FrozenLake-v0')
         P = lake.P 
         R = lake.R
         problem_name = "FrozenLake"
-        n_iter = 1000000
-        gammas = [0.5, 0.8, 0.9, 0.95, 0.99]
-        alphas = [0.1, 0.05, 0.01, 0.005]
-        epsilons = [0.95, 0.8, 0.25]
+        n_iter = 10000
+        gammas = [0.99]
+        alphas = [0.1]
+        epsilons = [0.95, 0.25]
 
     kargs = {
         "P": P, 

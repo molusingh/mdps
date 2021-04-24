@@ -6,10 +6,13 @@ import json
 import time
 
 from hiive.mdptoolbox import mdp, example
+from openai import OpenAI_MDPToolbox
 import gym
 
 RANDOM_SEED = 1994540101
 np.random.seed(RANDOM_SEED) # keep results consistent
+
+lake = OpenAI_MDPToolbox('FrozenLake-v0')
 
 def illustrate_policy(policy, problem_name="Forest"):
     if problem_name == "Forest":
@@ -22,7 +25,15 @@ def illustrate_policy(policy, problem_name="Forest"):
                 waits += 1
         return f'Number of states: {len(policy)}, Number of cuts: {cuts}, Number of waits: {waits}'
     else:
-        return policy
+        convert_action = lambda a: '<' if a == 0 else 'V' if a == 1 else '>' if a == 2 else '^' 
+        policy_desc = [convert_action(i) for i in policy]
+        policy_grid = np.reshape(policy_desc, (4, 4))
+        for i in range(lake.env.desc.shape[0]):
+            for j in range(lake.env.desc.shape[1]):
+                s = lake.env.desc[i][j].decode('UTF-8')
+                if s == 'H' or s == 'G':
+                    policy_grid[i][j] = s
+        return policy_grid
 
 def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", value_iter=True, output="output", show=False):
     policies = {}
@@ -68,7 +79,7 @@ def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", v
     return rewards, time, policies
 
 
-def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.001, epsilon=1.0, e_min=0.1, e_decay=0.999, n_iter=10000, plot=False, show=False, output="output", problem_name="Forest"):
+def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.001, epsilon=1.0, e_min=0.1, e_decay=0.999, n_iter=10000, plot=False, show=False, output="output", problem_name="Forest", callback=None):
     args = {
         "alpha": alpha,
         "alpha_decay": alpha_decay,
@@ -76,7 +87,8 @@ def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.001, e
         "epsilon": epsilon,
         "epsilon_min": e_min,
         "epsilon_decay": e_decay,
-        "n_iter": n_iter
+        "n_iter": n_iter,
+        "iter_callback": callback
     }
     ql = mdp.QLearning(P, R, gamma, **args) 
     ql_results = ql.run()
