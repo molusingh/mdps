@@ -10,11 +10,11 @@ from mdp import *
 def main(args):
     print(f'\nBeginning experiments, provided arguments: {args}\n')
     problem_name = "Forest" if not args.lake else "Frozen_Lake"
-    P, R = example.forest(S=10, r1=4, r2=2, p=0.25, is_sparse=False) # Forest 
-    alphas = [0.1, 0.001]
-    epsilons = [0.95, 0.9]
+    P, R = example.forest(S=500, r1=4, r2=2, p=0.25, is_sparse=False) # Forest 
+    alphas = [0.1, 0.01, 0.001]
+    epsilons = [0.9, 0.75, 0.5, 0.25]
 
-    gammas = [0.8, 0.9, 0.95, 0.99]
+    gammas = [0.5, 0.8, 0.9, 0.95, 0.99]
     kargs = {
         "P": P, 
         "R": R,

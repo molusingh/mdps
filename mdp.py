@@ -126,5 +126,5 @@ def run_qlearnings(P, R, params=[0.1, 0.25], problem_name="Forest", value_iter=T
     else:
         plt.close()
         
-    print(f"Problem: {problem_name}\nFunction: {desc}\nPolicies for different alphas values:\n{policies}")
+    print(f"Problem: {problem_name}\nFunction: {desc}\nPolicies for different {param_name} values:\n{policies}")
     return rewards, time, policies
