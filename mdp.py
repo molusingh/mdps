@@ -14,6 +14,16 @@ np.random.seed(RANDOM_SEED) # keep results consistent
 
 lake = OpenAI_MDPToolbox('FrozenLake-v0')
 
+def convert_action(a):
+    if a == 0:
+        return '<'
+    elif a == 1:
+        return 'V'
+    elif a == 2:
+        return '>'
+    else:
+        return '^'
+
 def illustrate_policy(policy, problem_name="Forest"):
     if problem_name == "Forest":
         cuts = 0
@@ -25,7 +35,6 @@ def illustrate_policy(policy, problem_name="Forest"):
                 waits += 1
         return f'Number of states: {len(policy)}, Number of cuts: {cuts}, Number of waits: {waits}'
     else:
-        convert_action = lambda a: '<' if a == 0 else 'V' if a == 1 else '>' if a == 2 else '^' 
         policy_desc = [convert_action(i) for i in policy]
         policy_grid = np.reshape(policy_desc, (4, 4))
         for i in range(lake.env.desc.shape[0]):
@@ -33,6 +42,7 @@ def illustrate_policy(policy, problem_name="Forest"):
                 s = lake.env.desc[i][j].decode('UTF-8')
                 if s == 'H' or s == 'G':
                     policy_grid[i][j] = s
+        print(policy)
         return policy_grid
 
 def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", value_iter=True, output="output", show=False):
