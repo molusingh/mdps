@@ -14,7 +14,7 @@ def main(args):
     P, R = example.forest(S=500, r1=4, r2=2, p=0.25, is_sparse=False) # Forest 
     alphas = [0.1, 0.01, 0.001]
     epsilons = [0.95, 0.5, 0.25, 0.1]
-    gammas = [0.5, 0.75, 0.9, 0.95, 0.99]
+    gammas = [0.5, 0.75, 0.9, 0.99]
     n_iter = 1000000
 
     if args.lake:
@@ -24,7 +24,7 @@ def main(args):
         n_iter = 200000
         gammas = [0.99, 0.75, 0.5, 0.25]
         alphas = [0.2, 0.1, 0.01, 0.0001]
-        epsilons = [0.95, 0.5, 0.25, 0.1]
+        epsilons = [0.95, 0.5, 0.25, 0.1, 0.01]
 
     kargs = {
         "P": P, 
