@@ -104,7 +104,7 @@ def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.05, ep
         "epsilon_min": e_min,
         "epsilon_decay": e_decay,
         "n_iter": n_iter,
-        "iter_callback": callback
+        "iter_callback": callback if problem_name != "Forest" else None
     }
     ql = mdp.QLearning(P, R, gamma, **args) 
     ql_results = ql.run()
