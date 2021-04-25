@@ -41,7 +41,7 @@ def main(args):
     print()
     run_qlearnings(params=epsilons, n_iter=n_iter, param_alpha=False, **kargs) # qlearnings 
     print()
-    q_learning(plot=True, **kargs, n_iter=n_iter)
+    q_learning(plot=True, **kargs, n_iter=n_iter, callback=callback)
 
     print(f'\nCompleted!\narguments: {args}\n')
     

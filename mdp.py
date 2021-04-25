@@ -24,6 +24,13 @@ def convert_action(a):
     else:
         return '^'
 
+def callback(s, a, s_new):
+    state = lake.env.desc.reshape(16)[s_new].decode('UTF-8')
+    if state == 'H' or state == 'G':
+        return True
+    else:
+        return False
+
 def illustrate_policy(policy, problem_name="Forest"):
     if problem_name == "Forest":
         cuts = 0
@@ -88,7 +95,7 @@ def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", v
     return rewards, time, policies
 
 
-def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.0001, epsilon=1.0, e_min=0.0001, e_decay=0.999, n_iter=10000, plot=False, show=False, output="output", problem_name="Forest", callback=None):
+def q_learning(P, R, gamma=0.99 ,alpha=0.1, alpha_decay=0.99, alpha_min=0.05, epsilon=1.0, e_min=0.1, e_decay=0.9999, n_iter=100000, plot=False, show=False, output="output", problem_name="Forest", callback=None):
     args = {
         "alpha": alpha,
         "alpha_decay": alpha_decay,
@@ -130,7 +137,7 @@ def run_qlearnings(P, R, params=[0.1, 0.25], problem_name="Forest", value_iter=T
     desc = f"Q-Learning_different_{param_name}s"
     
     for param in params:
-        q, results = q_learning(P, R, n_iter=n_iter, **{param_name: param})
+        q, results = q_learning(P, R, n_iter=n_iter, **{param_name: param}, callback=callback)
         col = f'{param_name}: {param}'
         iterations = [it['Iteration'] for it in results]
         rewards[col] = pd.Series([it['Mean V'] for it in results], index=iterations)
