@@ -69,7 +69,8 @@ def run_iterations(P, R, gammas=[0.99, 0.9, 0.85, 0.8], problem_name="Forest", v
     rewards.index.name = 'Iterations'
     time = pd.DataFrame(time, index=gammas)
     time.index.name = 'Gamma'
-    
+    if problem_name != "Forest" and desc == 'Policy_Iteration':
+        rewards = rewards.drop_duplicates(subset='Gamma: 0.99')
     
     # plot and log results
     rewards.plot()
